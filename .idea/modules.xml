@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidHelper.iml" filepath="$PROJECT_DIR$/AndroidHelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/App/App.iml" filepath="$PROJECT_DIR$/App/App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AsyncLoadingImage/AsyncLoadingImage.iml" filepath="$PROJECT_DIR$/AsyncLoadingImage/AsyncLoadingImage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseHelper/BaseHelper.iml" filepath="$PROJECT_DIR$/BaseHelper/BaseHelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ChartCreater/ChartCreater.iml" filepath="$PROJECT_DIR$/ChartCreater/ChartCreater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NetHelper/NetHelper.iml" filepath="$PROJECT_DIR$/NetHelper/NetHelper.iml" />
+    </modules>
+  </component>
+</project>

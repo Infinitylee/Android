@@ -1,0 +1,56 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.infinitytron.basehelper" >
+
+    <!-- 联网许可 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 网络监听 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- WIFI监听 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 读写储存卡 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 挂载许可 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 振动服务 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 拨打电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 清空应用缓存 -->
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <!-- 读取手机信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 获取手机地址 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 重启程序 -->
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <!-- 允许管理文档的访问 -->
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <!-- 唤醒手机屏幕 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 禁用键盘锁 -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!-- 摄像头 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 粘性广播 -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- 修改设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 用户解锁 -->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <!-- 屏幕唤醒 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 清除后台线程 -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!-- 读取日志 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- 蓝牙 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- 电池状态 -->
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+
+    <application android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true" >
+    </application>
+</manifest>

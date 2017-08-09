@@ -1,0 +1,283 @@
+# Android
+安卓开发依赖库
+* BaseHelper 负责基本的字符串、数字、图片、文件、系统状态、时间处理。其它库均依赖此模块
+* NetHelper 负责基本的网络连接，提供TCP和UDP的支持
+* AsyncLoadingImage 负责异步的网络图片加载，依赖于BaseHelper和NetHelper模块
+* ChartCreater 负责数据图表的展现，包括折线图和饼状图
+## 更新日志
+### Version 1.0.0 - 2017/08/07
+* 增加ChartCreater的折线图功能
+-----------------------------------
+    有问题或建议可以发邮件或者加QQ
+    Email: lpmdeumbrella@gmail.com
+    QQ: 37211065
+-----------------------------------
+## NetHelper
+### 简介
+* 负责基本的网络连接
+* 提供对TCP的支持
+  * HTTP协议
+    * GET封装
+    * POST封装，指出主流的三种提交方式，包括x-www-form-urlencoded、json、form-data
+  * MQTT协议
+* 提供对UDP的支持
+* 提供SOCKET助理
+* 提供线程池的支持，支持多线程请求
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加一行：
+```
+    compile project(':NetHelper')
+```
+* GET请求
+>```
+>    GetHelper getHelper = new GetHelper();
+>    getHelper.setSendAddress("http://192.168.43.83:8080/index.php"); // 设置请求地址
+>    getHelper.setNetEventHandle(new NetEventHandle() { // 设置请求事件回调
+>        @Override
+>        public void onSend() { } // 发送时回调
+>        @Override
+>        public void onReceive(Map<String, List<String>> receiveHeader, byte[] receiveMessage) { } // 接收时回调
+>        @Override
+>        public void onTimeout() { } // 超时回调
+>        @Override
+>        public void error(Integer errorCode) { } // 错误回调
+>    });
+>    NetHelper.getInstance().startNetworkWithoutReturn(getHelper); // 提交一个网络请求，并在线程池中运行
+>```
+>  * 其它设置项
+>```
+>    Map<String, String> sendMessageMap = new HashMap<>(); // 设置消息集合
+>    sendMessageMap.put("name", "Pthyem Lee");
+>    sendMessageMap.put("tool", "By NetHelper");
+>
+>    getHelper.setSendTextMap(sendMessageMap); // 设置要发送的消息
+>    getHelper.setSendHeaderCookieMap(sendMessageMap); // 设置要携带的Cookie消息
+>    getHelper.setReceiveCachePart(1024); // 设置接收消息缓存大小(默认1024个字节)
+>    getHelper.setReceiveTimeout(10000); // 设置请求超时时间(默认10秒)
+>    getHelper.setSendHeaderAccept("..."); // 设置请求头(默认text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8)
+>    getHelper.setSendHeaderAcceptEncoding("..."); // 设置请求头(默认gzip, deflate)
+>    getHelper.setSendHeaderAcceptLanguage("..."); // 设置请求头(默认zh-CN,zh;q=0.8,zh-TW;q=0.6,en;q=0.4)
+>    getHelper.setSendHeaderConnection("..."); // 设置请求头(默认keep-alive)
+>    getHelper.setSendHeaderHost("..."); // 设置请求头(默认为空)
+>    getHelper.setSendHeaderReferer("..."); // 设置请求头(默认为空)
+>    getHelper.setSendHeaderUserAgent("..."); // 设置请求头(默认Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36)
+>```
+* POST请求
+>```
+>    PostHelper postHelper = new PostHelper();
+>    postHelper.setSendAddress("http://192.168.43.83:8080/index.php"); // 设置请求地址
+>    postHelper.setSendMethod("x-www-form-urlencoded"); // 设置请求方法(x-www-form-urlencoded, json, form-data)
+>    postHelper.setNetEventHandle(new NetEventHandle() { // 设置请求事件回调
+>        @Override
+>        public void onSend() { } // 发送时回调
+>        @Override
+>        public void onReceive(Map<String, List<String>> receiveHeader, byte[] receiveMessage) { } // 接收时回调
+>        @Override
+>        public void onTimeout() { } // 超时回调
+>        @Override
+>        public void error(Integer errorCode) { } // 错误回调
+>    });
+>    NetHelper.getInstance().startNetworkWithoutReturn(postHelper); // 提交一个网络请求，并在线程池中运行
+>```
+>  * 其它设置项
+>```
+>    Map<String, String> sendMessageMap = new HashMap<>(); // 设置消息集合
+>    sendMessageMap.put("name", "Pthyem Lee");
+>    sendMessageMap.put("tool", "By NetHelper");
+>    Map<String, File> fileMap = new HashMap<>(); // 设置文件集合
+>    fileMap.put("test1", new File("mnt/sdcard/test.png"));
+>
+>    postHelper.setSendTextMap(sendMessageMap); // 设置要发送的消息(发送消息组合形式会随发送方式改变)
+>    postHelper.setSendFileMap(fileMap); // 设置要发送的文件(发送文件仅支持以form-data方式发送)
+>    postHelper.setSendHeaderCookieMap(sendMessageMap); // 设置要携带的Cookie消息
+>    postHelper.setReceiveCachePart(1024); // 设置接收消息缓存大小(默认1024个字节)
+>    postHelper.setReceiveTimeout(10000); // 设置请求超时时间(默认10秒)
+>    postHelper.setSendHeaderAccept("..."); // 设置请求头(默认text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8)
+>    postHelper.setSendHeaderAcceptEncoding("..."); // 设置请求头(默认gzip, deflate)
+>    postHelper.setSendHeaderAcceptLanguage("..."); // 设置请求头(默认zh-CN,zh;q=0.8,zh-TW;q=0.6,en;q=0.4)
+>    postHelper.setSendHeaderConnection("..."); // 设置请求头(默认keep-alive)
+>    postHelper.setSendHeaderHost("..."); // 设置请求头(默认为空)
+>    postHelper.setSendHeaderReferer("..."); // 设置请求头(默认为空)
+>    postHelper.setSendHeaderUserAgent("..."); // 设置请求头(默认Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36)
+>```
+* TCP通信
+>```
+>    TcpHelper tcpHelper = new TcpHelper();
+>    tcpHelper.setSendAddress("192.168.43.83"); // 设置请求地址
+>    tcpHelper.setSendPort(8000); // 设置请求端口
+>    tcpHelper.setSendMessage(message.getBytes());  // 设置请求内容
+>    tcpHelper.setNetEventHandle(new NetEventHandle() { // 设置请求事件回调
+>        @Override
+>        public void onSend() { } // 发送时回调
+>        @Override
+>        public void onReceive(Map<String, List<String>> receiveHeader, byte[] receiveMessage) { } // 接收时回调
+>        @Override
+>        public void onTimeout() { } // 超时回调
+>        @Override
+>        public void error(Integer errorCode) { } // 错误回调
+>    });
+>    NetHelper.getInstance().startNetworkWithoutReturn(tcpHelper); // 提交一个网络请求，并在线程池中运行
+>```
+>  * 其它设置项
+>```
+>    tcpHelper.setReceiveCachePart(1024); // 设置接收消息缓存大小(默认1024个字节)
+>    tcpHelper.setReceiveTimeout(10000); // 设置请求超时时间(默认10秒)
+>```
+* UDP通信
+>```
+>    UdpHelper udpHelper = new UdpHelper();
+>    udpHelper.setSendAddress("255.255.255.255"); // 设置请求地址
+>    udpHelper.setSendPort(1900); // 设置请求端口
+>    udpHelper.setSendMessage("hello world");  // 设置请求内容
+>    udpHelper.setNetEventHandle(new NetEventHandle() { // 设置请求事件回调
+>        @Override
+>        public void onSend() { } // 发送时回调
+>        @Override
+>        public void onReceive(Map<String, List<String>> receiveHeader, byte[] receiveMessage) { } // 接收时回调
+>        @Override
+>        public void onTimeout() { } // 超时回调
+>        @Override
+>        public void error(Integer errorCode) { } // 错误回调
+>    });
+>    NetHelper.getInstance().startNetworkWithoutReturn(udpHelper); // 提交一个网络请求，并在线程池中运行
+>```
+>  * 其它设置项
+>```
+>    udpHelper.setReceiveCachePart(1024); // 设置接收消息缓存大小(默认1024个字节)
+>    udpHelper.setReceiveTimeout(10000); // 设置请求超时时间(默认10秒)
+>```
+## AsyncLoadingImage
+### 简介
+* 负责异步的网络图片加载，依赖于BaseHelper和NetHelper模块
+* 可进行特殊请求的图片加载(特殊请求方式参照GetHelper方法)
+* 提供图片的软引用方法
+* 提供图片在本地储存方法(以图片url地址做MD5计算重命名保存)
+* 提供线程池的支持，支持多线程网络图片加载
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加三行：
+```
+    compile project(':NetHelper')
+    compile project(':BaseHelper')
+    compile project(':AsyncLoadingImage')
+```
+* 进行异步加载网络图片
+>```
+>    GetHelper getHelper = new GetHelper();
+>    getHelper.setSendAddress("http://192.168.43.83/image/test.jpg"); // 设置请求地址
+>    imageView.setTag(R.id.asyncLoadingImage, getHelper.getSendAddress()); // 给imageView设置标记，图片加载完毕后会寻找对应标记的控件进行图片设置
+>    AsyncLoadingImage.getInstance().asyncLoading(TestActivity.this, getHelper, imageView, "/savePath/"); // 提交一个网络图片加载请求，并在线程池中运行
+>```
+## ChartCreater
+### 简介
+* 负责数据图表的展现，包括折线图和饼状图
+* 提供自适布局大小应方法
+* 支持高度自定义，包括x轴y轴样式，数据样式，点击后的气泡展现样式等
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加一行：
+```
+    compile project(':ChartCreater')
+```
+* 折线图
+>```
+>    List<Map<Integer, Integer>> dataMapList = new ArrayList<>(); // 设置数据集合列表(支持多组数据展现，每组数据以Map形式储存，以List集合)
+>
+>    Map<Integer, Integer> dataMapOn = new HashMap<>(); // 第一组数据
+>    dataMapOn.put(0, 3);
+>    ...
+>    dataMapOn.put(9, 8);
+>
+>    dataMapList.add(dataMapOn); // 添加第一组数据到List列表
+>
+>    Map<Integer, Integer> dataMapTw = new HashMap<>(); // 第二组数据
+>    dataMapTw.put(0, 0);
+>    ...
+>    dataMapTw.put(9, 4);
+>
+>    dataMapList.add(dataMapOn); // 添加第二组数据到List列表
+>
+>    SquareChartView squareChartView = new SquareChartView(this);
+>    squareChartView.setDataMapList(dataMapList); // 设置图标数据
+>    squareChartView.invalidate(); // 通知view组件重绘
+>    ((RelativeLayout) findViewById(R.id.relativeLayout)).addView(squareChartView); // 添加图标到Layout中，图表大小及比例取决于存放的Layout大小
+>```
+>  * 设置图表样式(默认样式如下)
+>```
+>    Map<Integer, String> squareChartStyleMap = new HashMap<>();
+>
+>    squareChartStyleMap.put(ChartEntity.chartSimpleTextSize, "24"); // 设置气泡文字代销
+>    squareChartStyleMap.put(ChartEntity.chartSimpleTextColor, "#ffffff"); // 设置气泡文字颜色
+>    squareChartStyleMap.put(ChartEntity.chartSimpleLayoutWidth, "50"); // 设置气泡宽度
+>    squareChartStyleMap.put(ChartEntity.chartSimpleLayoutHeight, "50"); // 设置气泡高度
+>    squareChartStyleMap.put(ChartEntity.chartSimpleLayoutBackground, "#8c5e5e5e"); // 设置气泡背景颜色，支持透明颜色属性
+>
+>    squareChartView.setSquareChartStyleMap(squareChartStyleMap); // 设置图表样式
+>```
+>  * 设置x轴和y轴下标内容(默认x轴和y轴下标都是0~9)
+>```
+>    List<Map<Integer, String>> xyMapList = new ArrayList<>();
+>
+>    Map<Integer, String> xMap = new HashMap<>();
+>    xMap.put(0, "0");
+>    ...
+>    xMap.put(10, "10");
+>
+>    xyMapList.add(xMap); // 添加x轴下标到列表
+>
+>    Map<Integer, String> yMap = new HashMap<>();
+>    yMap.put(0, "0");
+>    ....
+>    yMap.put(11, "11");
+>
+>    xyMapList.add(yMap); // 添加y轴下标到列表
+>
+>    squareChartView.setXyMapList(xyMapList); // 设置x轴和y轴下标内容
+>```
+>  * 设置x轴和y轴样式(默认样式如下)
+>```
+>    List<Map<Integer, String>> xySettingMapList = new ArrayList<>();
+>
+>    Map<Integer, String> xMapStyle = new HashMap<>();
+>    xMapStyle.put(ChartEntity.xMarginBottom, "100"); // 设置x轴距底部边界的距离，以适应文字长度与大小
+>    xMapStyle.put(ChartEntity.xTextSize, "24"); // 设置x轴下标文字大小
+>    xMapStyle.put(ChartEntity.xTextColor, "#5e5e5e"); // 设置x轴下标文字颜色
+>    xMapStyle.put(ChartEntity.xTextMarginTopLine, "30"); // 设置x轴下标文字距x轴的距离，以适应文字长度与大小
+>    xMapStyle.put(ChartEntity.xLineWidth, "3"); // 设置x轴宽度
+>    xMapStyle.put(ChartEntity.xLineColor, "#dedede"); // 设置x轴颜色
+>
+>    xySettingMapList.add(xMapStyle);
+>
+>    Map<Integer, String> yMapStyle = new HashMap<>();
+>    yMapStyle.put(ChartEntity.yMarginLeft, "60"); // 设置y轴距左边界的距离，以适应文字长度与大小
+>    yMapStyle.put(ChartEntity.yTextSize, "16"); // 设置y轴下标文字大小
+>    yMapStyle.put(ChartEntity.yTextColor, "#5e5e5e"); // 设置y轴下标文字颜色
+>    yMapStyle.put(ChartEntity.yTextMarginRightLine, "30"); // 设置y轴下标文字距y轴的距离，以适应文字长度与大小
+>    yMapStyle.put(ChartEntity.yLineWidth, "3"); // 设置y轴宽度
+>    yMapStyle.put(ChartEntity.yLineColor, "#dedede"); // 设置y轴颜色
+>
+>    xySettingMapList.add(yMapStyle);
+>
+>    squareChartView.setXyStyleMapList(xySettingMapList); // 设置x轴和y轴样式
+>```
+>  * 设置数据样式(默认样式如样式一)
+>```
+>    List<Map<Integer, String>> dataStyleList = new ArrayList<>(); // 设置数据样式集合列表(样式与数据组序一一对应，未设置或缺省则以默认样式显示)
+>
+>    Map<Integer, String> dataStyleOn = new HashMap<>();
+>    dataStyleOn.put(ChartEntity.dataLineColor, "#dedede"); // 设置数据连线颜色
+>    ataStyleOn.put(ChartEntity.dataLineWidth, "3"); // 设置数据连线宽度
+>    dataStyleOn.put(ChartEntity.dataPointColor, "#8c5e5e5e"); // 设置数据点颜色
+>    dataStyleOn.put(ChartEntity.dataPointRadius, "5"); // 设置数据点半径
+>
+>    dataStyleList.add(dataStyleOn); // 设置第一组数据样式
+>
+>    Map<Integer, String> dataStyleTw = new HashMap<>();
+>    dataStyleTw.put(ChartEntity.dataLineColor, "#6686f0"); // 设置数据连线颜色
+>    dataStyleTw.put(ChartEntity.dataLineWidth, "3"); // 设置数据连线宽度
+>    dataStyleTw.put(ChartEntity.dataPointColor, "#8c0c42f1"); // 设置数据点颜色
+>    dataStyleTw.put(ChartEntity.dataPointRadius, "5"); // 设置数据点半径
+>
+>    dataStyleList.add(dataStyleTw); // 设置第二组数据样式
+>
+>    squareChartView.setDataStyleMapList(dataStyleList); // 设置数据样式
+>```
+>![ChartCreater](http://infinitytron.sinaapp.com/tron/images/github/github_android_chart.png)

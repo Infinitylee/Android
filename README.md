@@ -1,4 +1,4 @@
-# Android
+﻿# Android
 安卓开发依赖库
 * BaseHelper 负责基本的字符串、数字、图片、文件、系统状态、时间处理。其它库均依赖此模块
 * NetHelper 负责基本的网络连接，提供TCP和UDP的支持
@@ -7,6 +7,9 @@
 ## 更新日志
 ### Version 1.0.0 - 2017/08/07
 * 增加ChartCreater的折线图功能
+### Version 1.1.0 - 2017/08/09
+* 增加ChartCreater的饼状图功能
+* 修改ChartPaint相关设置
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com
@@ -280,4 +283,39 @@
 >
 >    squareChartView.setDataStyleMapList(dataStyleList); // 设置数据样式
 >```
+* 饼状图
+>```
+>    List<Map<Integer, String>> dataWithStyleMapList = new ArrayList<>(); // 数据内容集合列表(有别于折线，饼状图的数据与样式成为一个集合存放于列表中)
+>
+>    Map<Integer, Integer> dataWithStyleMapOn = new HashMap<>(); // 第一组数据
+>    dataWithStyleMapOn.put(ChartEntity.data, String.valueOf(50)); // 放置数据
+>    dataWithStyleMapOn.put(ChartEntity.dataShowColor, "#dedede"); // 设置数据在饼状图中弧边的颜色（这里只能填RGB）
+>    dataWithStyleMapOn.put(ChartEntity.dataShowText, "第一数据"); // 设置数据类型名称
+>
+>    dataWithStyleMapList.add(dataWithStyleMapOn); // 添加第一组数据到List列表
+>
+>    Map<Integer, Integer> dataWithStyleMapTw = new HashMap<>(); // 第二组数据
+>    ...
+>    dataWithStyleMapList.add(dataWithStyleMapTw); // 添加第二组数据到List列表
+>
+>    RoundChartView roundChartView = new RoundChartView(this);
+>    roundChartView.setDataWithStyleMapList(dataWithStyleMapList); // 设置图表数据
+>    roundChartView.invalidate(); // 通知view组件重绘
+>    ((RelativeLayout) findViewById(R.id.relativeLayout)).addView(squareChartView); // 添加图表到Layout中，图表大小及比例取决于存放的Layout大小
+>```
+>  * 设置图表样式(默认样式如下)
+>```
+>    Map<Integer, String> roundChartStyleMap = new HashMap<>();
+>
+>    roundChartStyleMap.put(ChartEntity.roundChartPadding, "56"); // 设置图表内边距（可根据某项数据展示的弧度宽度适当调整）
+>    roundChartStyleMap.put(ChartEntity.roundChartWidth, "120"); //  设置图表弧度的宽度
+>    roundChartStyleMap.put(ChartEntity.roundChartShowWidth, "128"); // 设置某项数据展示的弧度宽度
+>    roundChartStyleMap.put(ChartEntity.roundChartShowDataSize, "108"); // 设置图表某项数据在中间展现的字体大小
+>    roundChartStyleMap.put(ChartEntity.roundChartShowTextSize, "40"); // 设置图表某项数据的类型名称在中间展现的字体大小
+>    roundChartStyleMap.put(ChartEntity.roundChartShowTextColor, "#8c5e5e5e"); // 设置图表某项数据的类型名称在中间展现的字体颜色
+>    roundChartStyleMap.put(ChartEntity.roundChartShowTextBackground, "#ffffff"); // 设置图表某项数据在中间展现背景颜色
+>
+>    squareChartView.setSquareChartStyleMap(squareChartStyleMap); // 设置图表样式
+>```
+
 >![ChartCreater](http://infinitytron.sinaapp.com/tron/images/github/github_android_chart.png)

@@ -28,7 +28,7 @@ public class SquareChartView extends View {
 	public List<Map<Integer, String>> xyStyleMapList = new ArrayList<>(); // xy轴和下标展现的样式集合列表(1x轴, 2y轴)
 	public List<Map<Integer, Integer>> dataMapList = new ArrayList<>(); // 数据内容集合列表
 	public List<Map<Integer, String>> dataStyleMapList = new ArrayList<>(); // 数据展现的样式集合列表
-	public Map<Integer, String> squareChartStyleMap = new HashMap<>(); // 方形图标样式集合
+	public Map<Integer, String> squareChartStyleMap = new HashMap<>(); // 方形图表样式集合
 
 	/**
 	 * 设置xy轴下标内容
@@ -144,7 +144,7 @@ public class SquareChartView extends View {
 	 * 设置图表样式集合
 	 */
 	public void setSquareChartStyleMap(Map<Integer, String> squareChartStyleMap) {
-		// 判断图标样式集合列表数据完整性
+		// 判断图表样式集合列表数据完整性
 		if (!squareChartStyleMap.containsKey(ChartEntity.chartSimpleTextSize)) {
 			squareChartStyleMap.put(ChartEntity.chartSimpleTextSize, "24");
 		}
@@ -168,7 +168,7 @@ public class SquareChartView extends View {
 	 */
 	public SquareChartView(Context context) {
 		super(context);
-		// 初始化图标样式
+		// 初始化图表样式
 		setSquareChartStyleMap(squareChartStyleMap);
 		// 初始化xy轴的下标内容
 		setXyMapList(xyMapList);
@@ -333,7 +333,7 @@ public class SquareChartView extends View {
 		if (x != 0 && y != 0) {
 			// 绘制外边框
 			RectF rect = new RectF(x - Integer.parseInt(squareChartStyleMap.get(ChartEntity.chartSimpleLayoutWidth)) / 2, y - 25 - Integer.parseInt(squareChartStyleMap.get(ChartEntity.chartSimpleLayoutHeight)), x + Integer.parseInt(squareChartStyleMap.get(ChartEntity.chartSimpleLayoutWidth)) / 2, y - 25);
-			canvas.drawRoundRect(rect,
+			canvas.drawRoundRect(   rect,
 									5, // x轴的半径
 									5, // y轴的半径
 									new ChartPaint().Paint(squareChartStyleMap.get(ChartEntity.chartSimpleLayoutBackground), 16));

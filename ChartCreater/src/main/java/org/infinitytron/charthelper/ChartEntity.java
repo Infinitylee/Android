@@ -24,4 +24,15 @@ public class ChartEntity {
 	public static int chartSimpleLayoutHeight = 19;
 	public static int chartSimpleLayoutBackground = 20;
 
+	public static int data = 21;
+	public static int dataShowColor = 22;
+	public static int dataShowText = 23;
+	public static int roundChartPadding = 24;
+	public static int roundChartWidth = 25;
+	public static int roundChartShowWidth = 26;
+	public static int roundChartShowDataSize = 27;
+	public static int roundChartShowTextSize = 28;
+	public static int roundChartShowTextColor = 29;
+	public static int roundChartShowTextBackground = 30;
+
 }

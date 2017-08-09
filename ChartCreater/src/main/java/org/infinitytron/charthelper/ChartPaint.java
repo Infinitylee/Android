@@ -2,6 +2,7 @@ package org.infinitytron.charthelper;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.IdRes;
 
 public class ChartPaint {
 
@@ -18,6 +19,11 @@ public class ChartPaint {
 		paint.setStrokeWidth(paintWidth);
 		// 设置消除齿距
 		paint.setAntiAlias(true);
+		// 设置空心效果
+		/*if (strokeWidth != 0) {
+			paint.setStrokeWidth(40);
+			paint.setStyle(Paint.Style.STROKE);
+		}*/
 		return paint;
 	}
 }

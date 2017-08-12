@@ -10,6 +10,9 @@
 ### Version 1.1.0 - 2017/08/09
 * 增加ChartCreater的饼状图功能
 * 修改ChartPaint相关设置
+### Version 1.2.0 - 2017/08/12
+* 增加BaseHelper的摄像头支持（Camera2）
+* 修改API支持等级为21
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com

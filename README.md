@@ -381,9 +381,7 @@
 >
 >    squareChartView.setSquareChartStyleMap(squareChartStyleMap); // 设置图表样式
 >```
-
->![ChartCreater](http://infinitytron.sinaapp.com/tron/images/github/github_android_chart.png)
-
+>![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_chart.png)
 ## GestureImageView
 ### 简介
 * 负责手势对图片的展现

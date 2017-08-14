@@ -1,9 +1,10 @@
 ﻿# Android
 安卓开发依赖库
-* BaseHelper 负责基本的字符串、数字、图片、文件、系统状态、时间处理。其它库均依赖此模块
+* BaseHelper 负责基本的字符串、数字、图片、文件、系统状态、时间和摄像头处理。其它库均依赖此模块
 * NetHelper 负责基本的网络连接，提供TCP和UDP的支持
 * AsyncLoadingImage 负责异步的网络图片加载，依赖于BaseHelper和NetHelper模块
 * ChartCreater 负责数据图表的展现，包括折线图和饼状图
+* GestureImageView 支持手势的ImageView
 ## 更新日志
 ### Version 1.0.0 - 2017/08/07
 * 增加ChartCreater的折线图功能
@@ -13,11 +14,71 @@
 ### Version 1.2.0 - 2017/08/12
 * 增加BaseHelper的摄像头支持（Camera2）
 * 修改API支持等级为21
+### Version 1.3.0 - 2017/08/14
+* 增加GestureImageView组件，支持手势对图片的拖拽和缩放
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com
-    QQ: 37211065
+    QQ: 372110675
 -----------------------------------
+## BaseHelper
+### 简介
+* 负责基本的字符串、数字、图片、文件、系统状态、时间和摄像头处理
+* 根据其他库的需求不定期更新
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加一行：
+```
+    compile project(':BaseHelper')
+```
+* 调取摄像头
+>```
+>    @Override
+>    protected void onCreate(Bundle savedInstanceState) {
+>        ...
+>        textureView = (AutoFitTextureView) findViewById(R.id.texture);
+>    }
+>    
+>    @Override
+>    protected void onResume() {
+>        ...
+>        CameraEventHandle cameraEventHandle = new CameraEventHandle() { // 设置摄像头事件回调
+>            @Override
+>            public void captureStillPictureResult(final byte[] imageByteArray) { // 拍照后的时间回调，这里可以对照片进行储存或处理
+>                File file = new File(getExternalFilesDir(null), "pic.jpg");
+>                try (FileOutputStream output = new FileOutputStream(file)) {
+>                    output.write(imageByteArray);
+>                    Toast.makeText(MainActivity.this, "保存: " + file, Toast.LENGTH_SHORT).show();
+>                } catch (Exception e) {
+>                    e.printStackTrace();
+>                }
+>            }
+>            @Override
+>            public void setUpCameraOutputsError() { } // 错误回调
+>            @Override
+>            public void cameraAccessExceptionError() { } // 错误回调
+>            @Override
+>            public void onConfigureFailedError() { } // 错误回调
+>            @Override
+>            public void createCameraPreviewSessionError() { } // 错误回调
+>        };
+>        cameraHelper = new CameraHelper(MainActivity.this, textureView, cameraEventHandle); // 实例化摄像头
+>        cameraHelper.actionOpenCamera(); // 开启摄像头并预览
+>        // 拍照调用接口（成功后会把结果输出到事件接口里）：cameraHelper.actionCaptureStillPicture(); 
+>    }
+>    
+>    @Override
+>    protected void onPause() {
+>        ...
+>        cameraHelper.actionCloseCamera(); // 记得关闭并释放摄像头
+>    } 
+>```
+>  * 布局
+>```
+>    <org.infinitytron.basehelper.camera.AutoFitTextureView
+>        android:id="@+id/texture"
+>        android:layout_width="wrap_content"
+>        android:layout_height="wrap_content" />
+>```
 ## NetHelper
 ### 简介
 * 负责基本的网络连接
@@ -202,9 +263,9 @@
 >    dataMapList.add(dataMapOn); // 添加第二组数据到List列表
 >
 >    SquareChartView squareChartView = new SquareChartView(this);
->    squareChartView.setDataMapList(dataMapList); // 设置图标数据
+>    squareChartView.setDataMapList(dataMapList); // 设置图表数据
 >    squareChartView.invalidate(); // 通知view组件重绘
->    ((RelativeLayout) findViewById(R.id.relativeLayout)).addView(squareChartView); // 添加图标到Layout中，图表大小及比例取决于存放的Layout大小
+>    ((RelativeLayout) findViewById(R.id.relativeLayout)).addView(squareChartView); // 添加图表到Layout中，图表大小及比例取决于存放的Layout大小
 >```
 >  * 设置图表样式(默认样式如下)
 >```
@@ -320,5 +381,14 @@
 >
 >    squareChartView.setSquareChartStyleMap(squareChartStyleMap); // 设置图表样式
 >```
-
 >![ChartCreater](http://infinitytron.sinaapp.com/tron/images/github/github_android_chart.png)
+## GestureImageView
+### 简介
+* 负责手势对图片的展现
+* 提供双击缩放图片，单指拖拽、双指缩放图片的方法
+* 继承于AppCompatImageView，故用法跟ImageView无区别，可在布局的src里或在代码的setImageResource里设置图片来源
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加一行：
+```
+    compile project(':GestureImageView')
+```

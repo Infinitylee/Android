@@ -182,7 +182,6 @@ public class SwitchButton extends View {
 		// 绘制中间小圆点
 		canvas.drawCircle(left + radius + 1 + moveX, top + radius, radius - 4, new ButtonPaint().Paint("#" + increaseColor + turnOnCircleColor, 2, false));
 		canvas.drawCircle(left + radius + 1 + moveX, top + radius, radius - 4, new ButtonPaint().Paint("#" + reduceColor + closeUpCircleColor, 2, false));
-
 	}
 
 	/**
@@ -288,7 +287,7 @@ public class SwitchButton extends View {
 	}
 
 	/**
-	 * 唯一动画
+	 * 移动动画
 	 * @param endX 结束的x轴坐标
 	 */
 	private void move(final float endX) {

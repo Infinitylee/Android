@@ -116,8 +116,7 @@ public class SwitchButton extends View {
 	private long touchTime = 0;
 	// 动画计时器
 	private Timer timer = null;
-
-
+	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec), getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));

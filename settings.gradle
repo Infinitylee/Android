@@ -1,1 +1,1 @@
-include ':App', ':NetHelper', ':BaseHelper', ':AsyncLoadingImage', ':ChartCreater', ':GestureImageView'
+include ':App', ':NetHelper', ':BaseHelper', ':AsyncLoadingImage', ':ChartCreater', ':UserInterface'

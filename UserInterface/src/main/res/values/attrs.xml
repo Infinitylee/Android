@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwitchButton">
+        <!-- 设置控件是否可用 -->
+        <attr name="enable" format="boolean" />
+        <!-- 设置控件的开关状态 -->
+        <attr name="isOn" format="boolean" />
+        <!-- 设置控件关闭时边框颜色 -->
+        <attr name="closeUpFrameColor" format="reference|color" />
+        <!-- 设置控件关闭时小圆点颜色 -->
+        <attr name="closeUpCircleColor" format="reference|color" />
+        <!-- 设置控件打开时边框颜色 -->
+        <attr name="turnOnFrameColor" format="reference|color" />
+        <!-- 设置控件打开时小圆点颜色 -->
+        <attr name="turnOnCircleColor" format="reference|color" />
+    </declare-styleable>
+</resources>

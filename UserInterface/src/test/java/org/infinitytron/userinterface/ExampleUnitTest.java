@@ -1,4 +1,4 @@
-package org.infinitytron.gestureimageview;
+package org.infinitytron.userinterface;
 
 import org.junit.Test;
 

@@ -4,7 +4,7 @@
 * NetHelper 负责基本的网络连接，提供TCP和UDP的支持
 * AsyncLoadingImage 负责异步的网络图片加载，依赖于BaseHelper和NetHelper模块
 * ChartCreater 负责数据图表的展现，包括折线图和饼状图
-* GestureImageView 支持手势的ImageView
+* UserInterface 负责视图UI交互的封装，包括手势、圆形的ImageView，和主流的滑动开关SwitchButton
 ## 更新日志
 ### Version 1.0.0 - 2017/08/07
 * 增加ChartCreater的折线图功能
@@ -16,6 +16,8 @@
 * 修改API支持等级为21
 ### Version 1.3.0 - 2017/08/14
 * 增加GestureImageView组件，支持手势对图片的拖拽和缩放
+### Version 1.4.0 - 2017/08/15
+* 增加UserInterface库，包括手势ImageView、圆形ImageView、滑动开关SwitchButton
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com
@@ -382,13 +384,52 @@
 >    squareChartView.setSquareChartStyleMap(squareChartStyleMap); // 设置图表样式
 >```
 >![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_chart.png)
-## GestureImageView
+## UserInterface
 ### 简介
-* 负责手势对图片的展现
-* 提供双击缩放图片，单指拖拽、双指缩放图片的方法
-* 继承于AppCompatImageView，故用法跟ImageView无区别，可在布局的src里或在代码的setImageResource里设置图片来源
+* GestureImageView提供双击缩放图片，单指拖拽、双指缩放图片的方法。继承于AppCompatImageView，故用法跟ImageView无区别，可在布局的src里或在代码的setImageResource里设置图片来源
+* CircleImageView提供圆形的ImageView。继承于AppCompatImageView，故用法跟ImageView无区别
+* SwitchButton提供可滑动的开关，继承于View，支持自适应大小和任意比例，提供手指拖动或点击激活释放开关，内嵌滑动监听器OnSwitchListener
 ### 用法
 * 在Android Studio的build.gradle中，在dependencies里添加一行：
 ```
-    compile project(':GestureImageView')
+    compile project(':UserInterface')
 ```
+* GestureImageView
+>```
+>    <org.infinitytron.userinterface.GestureImageView
+>        android:layout_width="match_parent"
+>        android:layout_height="match_parent"
+>        android:src="@mipmap/test" />
+>```
+>![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_gestureimageview.gif)
+* CirlceImageView
+>```
+>    <org.infinitytron.userinterface.CirlceImageView
+>        android:layout_width="match_parent"
+>        android:layout_height="match_parent"
+>        android:src="@mipmap/test" />
+>```
+* SwitchButton
+>  * 布局
+>```
+>    <org.infinitytron.userinterface.SwitchButton
+>        android:layout_width="56dp"
+>        android:layout_height="32dp"
+>        app:enable="true" // 设置控件是否可用
+>        app:isOn="false" // 设置控件开关状态
+>        app:closeUpFrameColor="#a7a7a7" // 设置关闭时框架颜色
+>        app:closeUpCircleColor="#b9b9b9" // 设置关闭时小圆点颜色
+>        app:turnOnFrameColor="#05d05d" // 设置打开时框架颜色
+>        app:turnOnCircleColor="#dedede" // 设置打开时小圆点颜色
+>    />
+>```
+>  * 代码
+>```
+>    ((SwitchButton) findViewById(R.id.switchButton)).setOnSwitchListener(new OnSwitchListener() { // 设置监听器
+>        @Override
+>        public void onSwith(boolean isOn) {
+>            Log.i("开关状态", isOn + "");
+>        }
+>    });
+>```
+>![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_switchbutton.gif)

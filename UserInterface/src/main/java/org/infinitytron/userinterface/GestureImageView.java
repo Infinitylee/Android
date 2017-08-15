@@ -1,4 +1,11 @@
-package org.infinitytron.gestureimageview;
+/**
+ * @fileName GestureImageView
+ * @describe 支持手势的ImageView
+ * @author 李培铭
+ * @time 2017-08-13
+ * @copyRight ©2017 by InfinityTron.李培铭
+ */
+package org.infinitytron.userinterface;
 
 import android.content.Context;
 import android.graphics.Matrix;
@@ -313,13 +320,5 @@ public class GestureImageView extends AppCompatImageView {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 设置图片的最大和最小的缩放比例
-	 */
-	public void setPicZoomHeightWidth(float mMaxScale, float mMinScale) {
-		this.imageMaxScale = mMaxScale;
-		this.imageMinScale = mMinScale;
 	}
 }

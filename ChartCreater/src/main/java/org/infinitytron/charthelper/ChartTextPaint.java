@@ -1,3 +1,10 @@
+/**
+ * @fileName ChartTextPaint
+ * @describe 图表文字画笔类
+ * @author 李培铭
+ * @time 2017-08-01
+ * @copyRight ©2017 by InfinityTron.李培铭
+ */
 package org.infinitytron.charthelper;
 
 import android.graphics.Color;

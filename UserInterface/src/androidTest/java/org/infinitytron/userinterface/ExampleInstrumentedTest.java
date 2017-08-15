@@ -1,4 +1,4 @@
-package org.infinitytron.gestureimageview;
+package org.infinitytron.userinterface;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

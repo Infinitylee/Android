@@ -1,19 +1,18 @@
 /**
- * @fileName ChartPaint
+ * @fileName ButtonPaint
  * @describe 图表画笔类
  * @author 李培铭
  * @time 2017-08-01
  * @copyRight ©2017 by InfinityTron.李培铭
  */
-package org.infinitytron.charthelper;
+package org.infinitytron.userinterface.SwitchButton;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.IdRes;
 
-public class ChartPaint {
+public class ButtonPaint {
 
-	public Paint Paint(String paintColor, int paintWidth) {
+	public Paint Paint(String paintColor, int paintWidth, boolean isStroke) {
 		// 设置画笔
 		Paint paint = new Paint();
 		// 设置一个画笔笔刷颜色为黄色
@@ -27,10 +26,9 @@ public class ChartPaint {
 		// 设置消除齿距
 		paint.setAntiAlias(true);
 		// 设置空心效果
-		/*if (strokeWidth != 0) {
-			paint.setStrokeWidth(40);
+		if (isStroke) {
 			paint.setStyle(Paint.Style.STROKE);
-		}*/
+		}
 		return paint;
 	}
 }

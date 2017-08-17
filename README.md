@@ -5,6 +5,7 @@
 * AsyncLoadingImage 负责异步的网络图片加载，依赖于BaseHelper和NetHelper模块
 * ChartCreater 负责数据图表的展现，包括折线图和饼状图
 * UserInterface 负责视图UI交互的封装，包括手势、圆形的ImageView，和主流的滑动开关SwitchButton
+* SwipeBackFrame 负责activity或fragment手势滑动返回的框架
 ## 更新日志
 ### Version 1.0.0 - 2017/08/07
 * 增加ChartCreater的折线图功能
@@ -18,6 +19,8 @@
 * 增加GestureImageView组件，支持手势对图片的拖拽和缩放
 ### Version 1.4.0 - 2017/08/15
 * 增加UserInterface库，包括手势ImageView、圆形ImageView、滑动开关SwitchButton
+### Version 1.5.0 - 2017/08/17
+* 增加SwipeBackFrame框架，支持activity和fragment横向滑动的返回，支持内嵌RecyclerView和ViewPager滑动事件
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com
@@ -433,3 +436,24 @@
 >    });
 >```
 >![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_switchbutton.gif)
+## SwipeBackFrame
+### 简介
+* SwipeBackFrame提供activity和fragment下的手势滑动返回的框架
+* 主框架BaseSlidingPaneLayout继承并重写于SlidingPaneLayout，修改滑动事件捕捉并传递给子控件，所以内嵌的ViewPager和RecyclerView的滑动操作不受影响
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加一行：
+```
+    compile project(':SwipeBackFrame')
+```
+* 滑动返回
+>```
+>    // 想要让activity支持滑动返回,只需继承SwipeBackActivity即可
+>    // 想要让fragment支持滑动返回,只需继承SwipeBackFragment即可
+>
+>    // 启动activity
+>    new SwipeBackActivity().startSwipeBackActivty(MainActivity.this, TempOnActivity.class); // 用于本activity没继承SwipeBackActivity时
+>    startSwipeBackActivty(MainActivity.this, TempOnActivity.class); // 用于本activity继承SwipeBackActivity时
+>    // 启动fragment
+>    new SwipeBackFragment().startSwipeBackFragment(MainActivity.this, null, new TempOnFragment(), R.id.linearLayout); // 用于本activity没继承SwipeBackActivity时
+>```
+>![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_swipebackframe.gif)

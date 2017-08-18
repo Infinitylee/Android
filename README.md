@@ -21,6 +21,8 @@
 * 增加UserInterface库，包括手势ImageView、圆形ImageView、滑动开关SwitchButton
 ### Version 1.5.0 - 2017/08/17
 * 增加SwipeBackFrame框架，支持activity和fragment横向滑动的返回，支持内嵌RecyclerView和ViewPager滑动事件
+### Version 1.5.1 - 2017/08/18
+* 修复滑动开关SwitchButton响应事件Bugs，修复动态设置isOn状态时，试图不刷新问题。
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com

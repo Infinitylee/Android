@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -37,7 +38,18 @@ public class SwitchButton extends View {
 	}
 
 	public void setOn(boolean on) {
-		isOn = on;
+		if (startSwitchButtonCircle.y != 0) {
+			if (on && moveX != endSwitchButtonCircle.x - startSwitchButtonCircle.x) {
+				// 设置行程
+				move(endSwitchButtonCircle.x - startSwitchButtonCircle.x);
+			}
+			if (!on && moveX != 0) {
+				// 设置行程
+				move(0);
+			}
+		} else {
+			isOn = on;
+		}
 	}
 
 	public void setCloseUpFrameColor(String closeUpFrameColor) {
@@ -91,16 +103,26 @@ public class SwitchButton extends View {
 				this.closeUpFrameColor = Integer.toHexString(typedArray.getColor(R.styleable.SwitchButton_closeUpFrameColor, Color.parseColor("#a7a7a7"))).substring(2);
 				this.closeUpCircleColor = Integer.toHexString(typedArray.getColor(R.styleable.SwitchButton_closeUpCircleColor, Color.parseColor("#b9b9b9"))).substring(2);
 				this.turnOnFrameColor = Integer.toHexString(typedArray.getColor(R.styleable.SwitchButton_turnOnFrameColor, Color.parseColor("#05d05d"))).substring(2);
-				this.turnOnCircleColor = Integer.toHexString(typedArray.getColor(R.styleable.SwitchButton_turnOnCircleColor, Color.parseColor("#dedede"))).substring(2);
+				this.turnOnCircleColor = Integer.toHexString(typedArray.getColor(R.styleable.SwitchButton_turnOnCircleColor, Color.parseColor("#ffffff"))).substring(2);
 				typedArray.recycle();
 			}
 		}
 	}
 
+	// 关闭时的外框画笔
+	private ButtonPaint closeUpFramePaint = new ButtonPaint();
+	// 关闭时的小圆圈画笔
+	private ButtonPaint closeUpCirclePaint = new ButtonPaint();
+	// 打开时的外框画笔
+	private ButtonPaint turnOnFramePaint = new ButtonPaint();
+	// 打开时的小圆圈画笔
+	private ButtonPaint turnOnCirclePaint = new ButtonPaint();
 	// 记录x轴位移坐标
 	private float moveX = 0;
 	// 点击标记,用于判断手指是否点击到开关的小圆点
 	private boolean canMove = false;
+	// 滑动开关矩形位置
+	private RectF buttonRectF = new RectF();
 	// 记录拖动开始时候的坐标位置
 	private PointF movePoint = new PointF();
 	// 记录点击时的坐标位置
@@ -108,15 +130,15 @@ public class SwitchButton extends View {
 	// 判断是否已经有小圆点记录
 	private boolean hasLog = false;
 	// 记录当前小圆点的起止位置
-	private PointF startSwitchButtonCircle = new PointF();
-	private PointF endSwitchButtonCircle = new PointF();
+	private PointF startSwitchButtonCircle = new PointF(0, 0);
+	private PointF endSwitchButtonCircle = new PointF(0, 0);
 	// 记录当前小圆点的半径
-	private float currentSwitchButtonCircleRadius;
+	private float switchButtonCircleRadius;
 	// 记录按下的时间
 	private long touchTime = 0;
 	// 动画计时器
 	private Timer timer = null;
-	
+
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec), getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
@@ -160,7 +182,7 @@ public class SwitchButton extends View {
 			// 记录小圆点终点坐标
 			endSwitchButtonCircle.set(right - radius - 1, top + radius + 0.5f);
 			// 记录当前小圆点半径
-			currentSwitchButtonCircleRadius = radius - 4;
+			switchButtonCircleRadius = radius - 4;
 			// 初始化设置
 			if (!isOn) {
 				moveX = 0;
@@ -173,14 +195,14 @@ public class SwitchButton extends View {
 		String reduceColor = Integer.toHexString((int) (255f * (1f - moveX / (endSwitchButtonCircle.x - startSwitchButtonCircle.x))));
 		increaseColor = increaseColor.length() == 1 ? "0" + increaseColor : increaseColor;
 		reduceColor = reduceColor.length() == 1 ? "0" + reduceColor : reduceColor;
-		RectF buttonRectF = new RectF(left, top, right, bottom);
+		buttonRectF.set(left, top, right, bottom);
 		// 绘制开关外边框
-		canvas.drawRoundRect(buttonRectF, radius, radius, new ButtonPaint().Paint("#" + reduceColor + closeUpFrameColor, 1, true));
+		canvas.drawRoundRect(buttonRectF, radius, radius, closeUpFramePaint.Paint("#" + reduceColor + closeUpFrameColor, 1, true));
 		// 绘制开关内填充
-		canvas.drawRoundRect(buttonRectF, radius, radius, new ButtonPaint().Paint("#" + increaseColor + turnOnFrameColor, 1, false));
+		canvas.drawRoundRect(buttonRectF, radius, radius, turnOnFramePaint.Paint("#" + increaseColor + turnOnFrameColor, 1, false));
 		// 绘制中间小圆点
-		canvas.drawCircle(left + radius + 1 + moveX, top + radius, radius - 4, new ButtonPaint().Paint("#" + increaseColor + turnOnCircleColor, 2, false));
-		canvas.drawCircle(left + radius + 1 + moveX, top + radius, radius - 4, new ButtonPaint().Paint("#" + reduceColor + closeUpCircleColor, 2, false));
+		canvas.drawCircle(left + radius + 1 + moveX, top + radius, radius - 4, turnOnCirclePaint.Paint("#" + increaseColor + turnOnCircleColor, 2, false));
+		canvas.drawCircle(left + radius + 1 + moveX, top + radius, radius - 4, closeUpCirclePaint.Paint("#" + reduceColor + closeUpCircleColor, 2, false));
 	}
 
 	/**
@@ -213,7 +235,7 @@ public class SwitchButton extends View {
 						pointY = tempPointF.y - event.getY();
 					}
 					// 但点击点在小圆点内
-					if (Math.sqrt(pointX * pointX + pointY * pointY) <= currentSwitchButtonCircleRadius + 20f) { // 考虑到手指触摸屏幕的误差,设置误差为10像素,以便在小尺寸的控件下有好的触摸反馈
+					if (Math.sqrt(pointX * pointX + pointY * pointY) <= switchButtonCircleRadius + 20f) { // 考虑到手指触摸屏幕的误差,设置误差为10像素,以便在小尺寸的控件下有好的触摸反馈
 						// 设置可移动标记
 						canMove = true;
 						// 记录当前点击位置
@@ -227,13 +249,9 @@ public class SwitchButton extends View {
 				case MotionEvent.ACTION_UP:
 					// 判断触点消失时小圆点是否已经与边界接触
 					if (moveX > (endSwitchButtonCircle.x - startSwitchButtonCircle.x) / 2) { // 如果小圆点行程已经过半,则认为已经打开
-						// 设置标记并进行回调
-						isOn = true;
 						// 设置行程
 						move(endSwitchButtonCircle.x - startSwitchButtonCircle.x);
 					} else {
-						// 设置标记并进行回调
-						isOn = false;
 						// 设置行程
 						move(0);
 					}
@@ -241,14 +259,10 @@ public class SwitchButton extends View {
 					long leaveTime = System.currentTimeMillis();
 					// 如果在1000ms内,且触点抬起时的位置变化偏差不大于10像素,则进行开关操作
 					if (leaveTime - touchTime < 1000 && event.getX() < touchPoint.x + 5 && event.getX() > touchPoint.x - 5 && event.getY() < touchPoint.y + 5 && event.getY() > touchPoint.y - 5) {
-						if (!isOn) {
-							// 设置标记并进行回调
-							isOn = true;
+						if (moveX != endSwitchButtonCircle.x - startSwitchButtonCircle.x) {
 							// 设置行程
 							move(endSwitchButtonCircle.x - startSwitchButtonCircle.x);
 						} else {
-							// 设置标记并进行回调
-							isOn = false;
 							// 设置行程
 							move(0);
 						}
@@ -307,9 +321,11 @@ public class SwitchButton extends View {
 						}
 						postInvalidate();
 					} else {
-						//Log.i("TAG", "isOn" + isOn);
+						// 设置标记
+						isOn = true;
 						if (onSwitchListener != null) {
-							onSwitchListener.onSwith(true);
+							// 设置回调
+							onSwitchListener.onSwith(isOn);
 						}
 						this.cancel();
 					}
@@ -328,9 +344,11 @@ public class SwitchButton extends View {
 						}
 						postInvalidate();
 					} else {
-						//Log.i("TAG", "isOn" + isOn);
+						// 设置标记
+						isOn = false;
 						if (onSwitchListener != null) {
-							onSwitchListener.onSwith(false);
+							// 设置回调
+							onSwitchListener.onSwith(isOn);
 						}
 						this.cancel();
 					}

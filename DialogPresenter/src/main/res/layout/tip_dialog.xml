@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:orientation="vertical"
+    android:background="@drawable/loading_dialog_background" >
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#505050"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tipTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textColor="#505050"
+        android:textSize="16sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="56dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:text="@string/confirm"
+            android:textSize="14sp"
+            android:textColor="#1999fa"
+            android:background="#00000000"/>
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="56dp"
+            android:layout_height="48dp"
+            android:layout_toStartOf="@id/confirmButton"
+            android:text="@string/cancel"
+            android:textSize="14sp"
+            android:textColor="#1999fa"
+            android:background="#00000000"/>
+    </RelativeLayout>
+</LinearLayout>

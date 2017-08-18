@@ -6,6 +6,7 @@
 * ChartCreater 负责数据图表的展现，包括折线图和饼状图
 * UserInterface 负责视图UI交互的封装，包括手势、圆形的ImageView，和主流的滑动开关SwitchButton
 * SwipeBackFrame 负责activity或fragment手势滑动返回的框架
+* DialogPresenter 负责整体对话框的交互，新特性包括毛玻璃和MaterialDesign的设计
 ## 更新日志
 ### Version 1.0.0 - 2017/08/07
 * 增加ChartCreater的折线图功能
@@ -22,7 +23,9 @@
 ### Version 1.5.0 - 2017/08/17
 * 增加SwipeBackFrame框架，支持activity和fragment横向滑动的返回，支持内嵌RecyclerView和ViewPager滑动事件
 ### Version 1.5.1 - 2017/08/18
-* 修复滑动开关SwitchButton响应事件Bugs，修复动态设置isOn状态时，试图不刷新问题。
+* 修复滑动开关SwitchButton响应事件Bugs，修复动态设置isOn状态时，控件不刷新问题
+### Version 1.6.0 - 2017/08/18
+* 增加DialogPresenter库，支持毛玻璃和MaterialDesign的对话框
 -----------------------------------
     有问题或建议可以发邮件或者加QQ
     Email: lpmdeumbrella@gmail.com
@@ -459,3 +462,39 @@
 >    new SwipeBackFragment().startSwipeBackFragment(MainActivity.this, null, new TempOnFragment(), R.id.linearLayout); // 用于本activity没继承SwipeBackActivity时
 >```
 >![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_swipebackframe.gif)
+## DialogPresenter
+### 简介
+* 负责整体的对话框交互
+* 包含毛玻璃和MaterialDesign的设计效果
+### 用法
+* 在Android Studio的build.gradle中，在dependencies里添加一行：
+```
+    compile project(':DialogPresenter')
+```
+* Dialog
+>```
+>  * LoadingDialog
+>
+>    // 显示对话框，并设置效果为加载中
+>    LoadingDialog.getInstance().display(MainActivity.this, 1, "加载中...", false);
+>
+>    // 设置变化成加载完成效果
+>    LoadingDialog.getInstance().setMode(2, "加载成功");
+>
+>    // 设置变化成加载失败效果
+>    LoadingDialog.getInstance().setMode(3, "加载失败");
+>
+>    // 关闭对话框
+>    LoadingDialog.getInstance().close();
+>
+>  * TipDialog
+>
+>    // 显示对话框
+>    TipDialog.getInstance().display(MainActivity.this, "提示", "是否确认切换用户?", true, new TipDialogListener() {
+>        @Override
+>        public void onNegative() { } // 取消键事件
+>        @Override
+>        public void onPositive() { } // 确认键事件
+>    });
+>```
+>![ChartCreater](https://github.com/Infinitylee/Android/blob/master/images/github_android_dialog.gif)

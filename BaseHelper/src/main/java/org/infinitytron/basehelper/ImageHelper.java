@@ -7,9 +7,17 @@
  */
 package org.infinitytron.basehelper;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.view.View;
 
 public class ImageHelper {
 
@@ -60,6 +68,33 @@ public class ImageHelper {
 			return 1.0f;
 		}
 	}
+
+	/**
+	 * 获取圆角的图片
+	 * @param bitmap 位图信息
+	 * @param roundPx 圆角半径的像素量
+	 * @return 位图信息
+	 */
+	public Bitmap getRoundedCornerBitmap(Bitmap bitmap,float roundPx){
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap .getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(output);
+
+		final int color = 0xff424242;
+		final Paint paint = new Paint();
+		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		final RectF rectF = new RectF(rect);
+
+		paint.setAntiAlias(true);
+		canvas.drawARGB(0, 0, 0, 0);
+		paint.setColor(color);
+		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+		canvas.drawBitmap(bitmap, rect, rect, paint);
+
+		return output;
+	}
+
 
 	/**
 	 * 模糊效果

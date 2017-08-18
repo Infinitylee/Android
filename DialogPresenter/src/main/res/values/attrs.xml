@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwitchButton">
+        <!-- 设置控件的显示模式 -->
+        <attr name="mode" format="integer" />
+        <!-- 设置控件的外边框粗细 -->
+        <attr name="frameWidth" format="integer" />
+        <!-- 设置控件的加载模式边框粗细 -->
+        <attr name="loadingWidth" format="integer" />
+        <!-- 设置控件的加载完成时勾的粗细 -->
+        <attr name="finishWidth" format="integer" />
+        <!-- 设置控件的加载错误时感叹号的粗细 -->
+        <attr name="errorWidth" format="integer" />
+        <!-- 设置控件外边框的颜色 -->
+        <attr name="frameColor" format="reference|color" />
+        <!-- 设置控件加载时的颜色 -->
+        <attr name="loadingColor" format="reference|color" />
+        <!-- 设置控件加载完成时的颜色 -->
+        <attr name="finishColor" format="reference|color" />
+        <!-- 设置控件加载错误时的颜色 -->
+        <attr name="errorolor" format="reference|color" />
+    </declare-styleable>
+</resources>
